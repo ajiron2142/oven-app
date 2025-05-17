@@ -5,9 +5,12 @@ export default function Oven()
     const fastAPIUrl = 'http://10.0.0.178:8000'
     const cameraInfoEndpoint = '/camera-info'
     const metadataEndpoint = '/metadata'
+    const lowResEndpoint = '/low-res'
+    const highResEndpoint = '/high-res'
 
     const [camera, setCamera ] = useState([])
     const [metadata, setMetadata] = useState([])
+    const [image, setImage] = useState(null)
 
     const getCameraInfo = async () =>
     {
@@ -23,14 +26,33 @@ export default function Oven()
         const result = await response.json()
 
         setMetadata(result)
-        console.log(result)
+        // console.log(result)
     }
 
-    useEffect(() =>
+    const getImage = async () =>
     {
-        getCameraInfo();
-        getMetadata() 
+        // Hi-res endpoint if needed
+        // const response = await fetch (`${fastAPIUrl}${highResEndpoint}`)
+        const response = await fetch (`${fastAPIUrl}${lowResEndpoint}`)
+        const blob = await response.blob();
+        const imageObjectURL = URL.createObjectURL(blob);
+        setImage(imageObjectURL);
+    }
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await getImage();
+            await getCameraInfo();
+            await getMetadata();
+        }
+        fetchData()
     }, [])
+
+    const buttonClick = () =>
+    {
+        console.log(metadata.FrameDuration)
+    }
 
     return <>
         { camera.map((value, index) =>
@@ -38,6 +60,13 @@ export default function Oven()
         
         <button>
             Click Me
-        </button>    
+        </button>  
+        <button onClick={ buttonClick }> Le Butt </button>
+
+        <button> {metadata.FrameDuration}</button>
+
+        <img src={image}  alt="Image from URL" />
+
+
     </>
 }
