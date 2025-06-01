@@ -1,11 +1,13 @@
 // import { useState } from 'react'
 import './App.css'
-import Oven from './oven.jsx'
+import Plant from './plant.jsx'
+import PlantHealth from './PlantHealth.jsx'
 
 export default function App ()
 {
   return <>
-    <h1> Oven App</h1>
-    <Oven />
+    <h1> Plant App</h1>
+    <Plant />
+    <PlantHealth />
   </>
 }

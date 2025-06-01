@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
+import PlantHealth from './PlantHealth'
 
-export default function Oven()
+export default function Plant()
 {
     const fastAPIUrl = 'http://10.0.0.178:8000'
     const cameraInfoEndpoint = '/camera-info'
     const metadataEndpoint = '/metadata'
     const lowResEndpoint = '/low-res'
     const highResEndpoint = '/high-res'
+    const plantObjectiveEndpoint = '/describe-plant-objective'
 
     const [camera, setCamera ] = useState([])
     const [metadata, setMetadata] = useState([])
     const [image, setImage] = useState(null)
+    const [plant, setPlant] = useState([])
+    // const [loading, setloading] = useState(true)
 
     const getCameraInfo = async () =>
     {
@@ -39,33 +43,54 @@ export default function Oven()
         setImage(imageObjectURL);
     }
 
+    const getPlant = async () =>
+    {
+        const response = await fetch (`${fastAPIUrl}${plantObjectiveEndpoint}`)
+        const result = await response.json()
+
+        console.log(result)
+        setPlant(result)
+    
+    }
 
     useEffect(() => {
         const fetchData = async () => {
             await getImage();
             await getCameraInfo();
             await getMetadata();
+            await getPlant();
         }
         fetchData()
     }, [])
+
 
     const buttonClick = () =>
     {
         console.log(metadata.FrameDuration)
     }
 
+
+
     return <>
         { camera.map((value, index) =>
             <button key={index}> { value.Model } </button>) }
         
-        <button>
-            Click Me
-        </button>  
+     
+
+        {/* <p>Health of the first plant: {plant[0].health_level}</p>     */}
+
+
+        
+
         <button onClick={ buttonClick }> Le Butt </button>
 
         <button> {metadata.FrameDuration}</button>
 
-        <img src={image}  alt="Image from URL" />
+        
+        Plant length: {plant.length}
+        {plant.length > 0 && PlantHealth(plant[0].health_level)}
+
+        {/* <img src={image}  alt="Image from URL" /> */}
 
 
     </>
