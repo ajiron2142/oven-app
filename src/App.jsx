@@ -9,5 +9,7 @@ export default function App ()
     <h1> Plant App</h1>
     <Plant />
     <PlantHealth />
+    {/* <img src="src\assets\images\loading2WebP.webp" className="fullscreen-image" /> */}
+    {/* <img src="src\assets\images\happyPlantWebP.webp" className="fullscreen-image" /> */}
   </>
 }

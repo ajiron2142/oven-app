@@ -4,6 +4,45 @@
   padding: 2rem;
   text-align: center;
 }
+
+.fullscreen-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  /* height: 100vh; */
+  background-color: #E6CCD6;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.plant-container{
+  display: flex;
+  width: 100vw;
+  /* height: 100vh; */
+}
+
+.plant-table {
+  width: 50vw;
+}
+
+.plant-table th {
+  background-color: #15b2dd;
+  padding:3%;
+  text-align:left;
+  /* etc */
+}
+
+.plant-table td {
+  text-align:center;
+  background-color: #3bbce097;
+  /* padding: 8px; */
+}
+
+.plant-illustration{
+  width: 50vw;
+}
+
 /* 
 .logo {
   height: 6em;
